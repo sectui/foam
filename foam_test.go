@@ -1,0 +1,55 @@
+package foam_test
+
+import (
+	"testing"
+
+	"github.com/sectui/foam"
+	"github.com/sectui/foam/commands"
+	"github.com/sectui/foam/config"
+	"github.com/sectui/foam/confirm"
+	"github.com/sectui/foam/form"
+	"github.com/sectui/foam/help"
+	"github.com/sectui/foam/list"
+	"github.com/sectui/foam/palette"
+	"github.com/sectui/foam/prompt"
+	"github.com/sectui/foam/theme"
+	"github.com/sectui/foam/viewer"
+)
+
+type cfg struct {
+	Theme theme.Theme       `koanf:",squash"`
+	Keys  commands.Bindings `koanf:"keys"`
+}
+
+type noSource struct{}
+
+func (noSource) Fields() []form.Field     { return nil }
+func (noSource) Set(string, string) error { return nil }
+func (noSource) Reset(string) error       { return nil }
+
+// Every command of a foam component has keys in Defaults.
+func TestDefaultsBindEveryCommand(t *testing.T) {
+	c, err := config.LoadBytes[cfg](foam.Defaults)
+	if err != nil {
+		t.Fatal(err)
+	}
+	reg, err := commands.New(c.Keys)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var l list.Model
+	var v viewer.Model
+	f := form.New("f", noSource{})
+	scopes := []commands.Scope{
+		{Name: "list", Commands: l.Commands()},
+		{Name: "viewer", Commands: v.Commands()},
+		help.New(nil).Scope(),
+		palette.New(nil).Scope(),
+		confirm.New("t", "q", nil).Scope(),
+		prompt.New("t", "", nil).Scope(),
+		f.Scope(),
+	}
+	if err := reg.Check(scopes); err != nil {
+		t.Fatal(err)
+	}
+}

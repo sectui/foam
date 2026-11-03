@@ -1,0 +1,5 @@
+go test fuzz v1
+string("00000000000뭼000000000")
+int(11)
+int(88)
+[]byte("%")

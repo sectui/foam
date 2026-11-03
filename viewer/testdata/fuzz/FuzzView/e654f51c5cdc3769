@@ -1,0 +1,7 @@
+go test fuzz v1
+string("二")
+int(1)
+int(3)
+bool(true)
+string("0")
+int(-91)
