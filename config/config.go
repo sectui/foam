@@ -181,7 +181,10 @@ func (l loader) load(files []string) (*koanf.Koanf, []string, error) {
 	if err := k.Load(env.Provider(".", env.Opt{
 		Prefix: prefix,
 		TransformFunc: func(key, val string) (string, any) {
-			key = envKey(l.leaves, strings.ReplaceAll(strings.TrimPrefix(key, prefix), "__", "."))
+			key, ok := envKey(l.leaves, strings.ReplaceAll(strings.TrimPrefix(key, prefix), "__", "."))
+			if !ok && !l.underMap(key) {
+				return "", nil // not a key: another program's variable, or a typo
+			}
 			return key, parseValue(l.lists, key, val)
 		},
 	}), nil); err != nil {
@@ -311,16 +314,17 @@ func fieldPaths(t reflect.Type, kind reflect.Kind) map[string]bool {
 }
 
 // envKey finds the config key an environment variable names: case and "_"
-// do not count, so STEEP_STEEP__RATE_LIMIT sets steep.rateLimit.
-func envKey(leaves map[string]bool, name string) string {
+// do not count, so STEEP_REQUEST__RATE_LIMIT sets request.rateLimit. ok is
+// false when it names no key.
+func envKey(leaves map[string]bool, name string) (key string, ok bool) {
 	norm := func(s string) string { return strings.ToLower(strings.ReplaceAll(s, "_", "")) }
 	want := norm(name)
 	for p := range leaves {
 		if norm(p) == want {
-			return p
+			return p, true
 		}
 	}
-	return strings.ToLower(name)
+	return strings.ToLower(name), false
 }
 
 func unmarshalStrict(k *koanf.Koanf, cfg any) error {

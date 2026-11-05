@@ -185,7 +185,7 @@ func (m *Model) View(maxW, maxH int) string {
 		default:
 			v := draw.Clean(f.Value)
 			if v == "" {
-				v = "—"
+				v = "-"
 			}
 			if len(f.Choices) > 0 {
 				v = "‹ " + v + " ›"

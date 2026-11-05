@@ -105,6 +105,18 @@ func TestFlagKeysAndEnv(t *testing.T) {
 	}
 }
 
+func TestUnknownEnvIgnored(t *testing.T) {
+	t.Setenv("FOAMTEST_BLA", "x")
+	t.Setenv("FOAMTEST_KEYS__APP__QUIT", "z")
+	cfg, err := load(t, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if app, _ := cfg.Keys["app"].(map[string]any); app["quit"] != "z" {
+		t.Fatalf("keys = %+v", cfg.Keys)
+	}
+}
+
 func TestUnknownKeyInFile(t *testing.T) {
 	f := write(t, t.TempDir(), "c.yaml", "nmae: typo\n")
 	if _, err := load(t, Options{Files: []string{f}}); err == nil || !strings.Contains(err.Error(), "nmae") {
