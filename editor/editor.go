@@ -159,9 +159,50 @@ func (m *Model) Scroll() draw.Scroll {
 }
 
 func (m *Model) Key(msg tea.KeyPressMsg) bool {
+	// The scrolling keys are the view's, not the engine's: it knows nothing
+	// of how tall the text is drawn. In insert mode they are vim's own.
+	if m.Mode() != vim.Insert && m.Pending() == "" {
+		if d, ok := m.scrollDelta(msg.String()); ok {
+			m.scrollRows(d)
+			return true
+		}
+	}
 	ok := m.Editor.Key(msg.String(), msg.Key().Text)
 	m.follow()
 	return ok
+}
+
+// scrollDelta is how many screen rows a key scrolls by, as vim does: half a
+// screen for ctrl+d and ctrl+u, one short of a screen for the rest.
+func (m *Model) scrollDelta(name string) (int, bool) {
+	half, full := max(m.h/2, 1), max(m.h-2, 1)
+	switch name {
+	case "ctrl+d":
+		return half, true
+	case "ctrl+u":
+		return -half, true
+	case "ctrl+f", "pgdown":
+		return full, true
+	case "ctrl+b", "pgup":
+		return -full, true
+	}
+	return 0, false
+}
+
+// scrollRows moves the cursor d screen rows and takes the view along, keeping
+// the cursor where it is on screen while there is text to scroll.
+func (m *Model) scrollRows(d int) {
+	m.refresh()
+	total := m.totalRows()
+	if m.h <= 0 || total == 0 {
+		return
+	}
+	cur := m.Cursor()
+	_, cell := m.rowAt(cur.Line, m.cells(cur.Line, cur.Col))
+	row := min(max(m.rowOf(cur)+d, 0), total-1)
+	m.top = max(min(m.top+d, total-m.h), 0)
+	m.SetCursor(m.posAt(cell, row-m.top))
+	m.follow()
 }
 
 func (m *Model) Paste(s string) {

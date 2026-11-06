@@ -69,6 +69,11 @@ type Editor struct {
 	version    uint64
 
 	TabText string
+
+	// ReadOnly refuses the keys that would change the text: the motions, the
+	// counts, the visual modes and the yanks are left. SetText still works,
+	// for an app that owns the text.
+	ReadOnly bool
 }
 
 func New(text string) *Editor {
@@ -247,8 +252,11 @@ func atoi(s string) int {
 	return n
 }
 
-// Paste inserts s at the cursor, as one change.
+// Paste inserts s at the cursor, as one change. It does nothing while ReadOnly.
 func (e *Editor) Paste(s string) {
+	if e.ReadOnly {
+		return
+	}
 	s = strings.ReplaceAll(s, "\r\n", "\n")
 	if e.mode != Insert {
 		e.snap()
@@ -268,6 +276,9 @@ func (e *Editor) Paste(s string) {
 // "x"); text is what it types, "" for a non-printing key. It reports whether
 // the key was used: an app gives the others its own meaning.
 func (e *Editor) Key(name, text string) bool {
+	if e.ReadOnly && e.mutates(name) {
+		return false
+	}
 	var used bool
 	switch e.mode {
 	case Insert:
@@ -279,6 +290,32 @@ func (e *Editor) Key(name, text string) bool {
 	}
 	e.settle()
 	return used
+}
+
+// mutates reports whether the key would change the text in the current mode.
+// Insert mode is unreachable while ReadOnly: every key opening it is refused,
+// here and in visual mode (c, s), so nothing else needs checking.
+func (e *Editor) mutates(name string) bool {
+	switch e.mode {
+	case Insert:
+		return true
+	case Visual, VisualLine:
+		switch name {
+		case "d", "c", "s", "x", "delete", "p", "P", "~":
+			return true
+		}
+		return false
+	}
+	switch name {
+	case "d", "c", "s", "S", "x", "X", "delete", "D", "C", "R", "p", "P", "J", "~", "u", "ctrl+r", "o", "O":
+		return true
+	case "r":
+		// replaces a character, unless an operator is waiting: then it is dropped
+		return e.op == 0
+	case "i", "a", "I", "A":
+		return e.op == 0
+	}
+	return false
 }
 
 // endOfLine is the column wanted after $: the end of every line moved to.
