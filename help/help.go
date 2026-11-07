@@ -52,7 +52,8 @@ func (m *Model) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-// Label is what a command is called in lists: its title, else its help.
+// Label is what a command is called in lists: its title, else its help,
+// else its ID's last word: "page down" for viewer.page-down.
 func Label(b commands.Binding) string {
 	switch {
 	case b.Title != "":
@@ -60,7 +61,11 @@ func Label(b commands.Binding) string {
 	case b.Help != "":
 		return b.Help
 	}
-	return b.ID
+	_, name, _ := strings.Cut(b.ID, ".")
+	if name == "" {
+		name = b.ID
+	}
+	return strings.ReplaceAll(name, "-", " ")
 }
 
 func (m *Model) View(maxW, maxH int) string {

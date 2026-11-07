@@ -70,7 +70,9 @@ func TestLabel(t *testing.T) {
 	}{
 		{commands.Command{ID: "a.b", Title: "T", Help: "h"}, "T"},
 		{commands.Command{ID: "a.b", Help: "h"}, "h"},
-		{commands.Command{ID: "a.b"}, "a.b"},
+		{commands.Command{ID: "a.b"}, "b"},
+		{commands.Command{ID: "viewer.page-down"}, "page down"},
+		{commands.Command{ID: "quit"}, "quit"},
 	} {
 		if got := Label(commands.Binding{Command: c.cmd}); got != c.want {
 			t.Errorf("Label = %q, want %q", got, c.want)

@@ -257,7 +257,8 @@ func (e *Editor) Paste(s string) {
 	if e.ReadOnly {
 		return
 	}
-	s = strings.ReplaceAll(s, "\r\n", "\n")
+	// terminals paste a line end as \r\n, \n or \r
+	s = strings.NewReplacer("\r\n", "\n", "\r", "\n").Replace(s)
 	if e.mode != Insert {
 		e.snap()
 	}

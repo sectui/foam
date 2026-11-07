@@ -177,6 +177,11 @@ func TestYankAndChanged(t *testing.T) {
 	if e.Text() != "b" {
 		t.Fatalf("undo paste = %q", e.Text())
 	}
+	// a terminal's line ends, whichever: \r\n, \r
+	e.Paste("1\r\n2\r3\n")
+	if e.Text() != "1\n2\n3\nb" {
+		t.Fatalf("paste of line ends = %q", e.Text())
+	}
 }
 
 func TestSetTextInVisualMode(t *testing.T) {

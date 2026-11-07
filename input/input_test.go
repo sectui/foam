@@ -15,7 +15,7 @@ func press(m *Model, keys ...tea.KeyPressMsg) {
 func TestEditing(t *testing.T) {
 	var m Model
 	press(&m, tea.KeyPressMsg{Code: 'a', Text: "a"}, tea.KeyPressMsg{Code: 'b', Text: "b"})
-	m.Update(tea.PasteMsg{Content: "c\nd"})
+	m.Update(tea.PasteMsg{Content: "c\rd"})
 	if m.Value() != "abc d" {
 		t.Fatalf("value = %q", m.Value())
 	}

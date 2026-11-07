@@ -38,7 +38,7 @@ func (m *Model) Reset() { m.SetValue("") }
 func (m *Model) Update(msg tea.Msg) bool {
 	switch msg := msg.(type) {
 	case tea.PasteMsg:
-		m.insert(strings.NewReplacer("\r\n", " ", "\n", " ", "\t", " ").Replace(msg.Content))
+		m.insert(strings.NewReplacer("\r\n", " ", "\n", " ", "\r", " ", "\t", " ").Replace(msg.Content))
 		return true
 	case tea.KeyPressMsg:
 		return m.key(msg)
