@@ -88,3 +88,11 @@ keys:
     prev: [h, left]
     edit: enter
     reset: d
+  tree:
+    open: enter
+    expand: [l, right]
+    collapse: [h, left]
+    expand-all: L
+    collapse-all: H
+    filter: /
+    clear-filter: ctrl+g

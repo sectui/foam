@@ -13,6 +13,7 @@ import (
 	"github.com/sectui/foam/palette"
 	"github.com/sectui/foam/prompt"
 	"github.com/sectui/foam/theme"
+	"github.com/sectui/foam/tree"
 	"github.com/sectui/foam/viewer"
 )
 
@@ -40,6 +41,7 @@ func TestDefaultsBindEveryCommand(t *testing.T) {
 	var l list.Model
 	var v viewer.Model
 	f := form.New("f", noSource{})
+	tr := tree.New(func(s string) (string, bool) { return s, false })
 	scopes := []commands.Scope{
 		{Name: "list", Commands: l.Commands()},
 		{Name: "viewer", Commands: v.Commands()},
@@ -48,6 +50,7 @@ func TestDefaultsBindEveryCommand(t *testing.T) {
 		confirm.New("t", "q", nil).Scope(),
 		prompt.New("t", "", nil).Scope(),
 		f.Scope(),
+		{Name: "tree", Commands: tr.Commands()},
 	}
 	if err := reg.Check(scopes); err != nil {
 		t.Fatal(err)
