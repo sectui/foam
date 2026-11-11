@@ -84,3 +84,9 @@ func (m *Model) Mouse(msg tea.MouseMsg) int {
 	}
 	return -1
 }
+
+func (m *Model) Reselect(msg tea.MouseMsg, focused bool) (row int, activate bool) {
+	before := m.sel
+	i := m.Mouse(msg)
+	return i, i >= 0 && focused && i == before
+}

@@ -1,6 +1,10 @@
 package list
 
-import "testing"
+import (
+	"testing"
+
+	tea "charm.land/bubbletea/v2"
+)
 
 func TestScrollFollowsSelection(t *testing.T) {
 	var m Model
@@ -16,5 +20,23 @@ func TestScrollFollowsSelection(t *testing.T) {
 	}
 	if s, _ := m.Visible(); s != 10 {
 		t.Fatalf("start = %d", s)
+	}
+}
+
+func TestReselect(t *testing.T) {
+	var m Model
+	m.SetLen(10)
+	m.SetHeight(10)
+	click := tea.MouseClickMsg{Y: 0, Button: tea.MouseLeft}
+
+	if _, activate := m.Reselect(click, false); activate {
+		t.Fatal("not focused: must not activate")
+	}
+	if _, activate := m.Reselect(click, true); !activate {
+		t.Fatal("focused, same row: must activate")
+	}
+	m.Select(5)
+	if _, activate := m.Reselect(click, true); activate {
+		t.Fatal("focused, different row: must only select, not activate")
 	}
 }
