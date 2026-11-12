@@ -8,7 +8,7 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 
-	"github.com/sectui/foam/keys"
+	"github.com/anotherhadi/foam/keys"
 )
 
 type Command struct {

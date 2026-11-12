@@ -7,7 +7,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/theme"
+	"github.com/anotherhadi/foam/theme"
 )
 
 type entry struct {

@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/sectui/foam/keys"
+	"github.com/anotherhadi/foam/keys"
 )
 
 // Bindings is the user's `keys:` section, nested by command ID:

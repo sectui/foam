@@ -1,5 +1,5 @@
 {
-  description = "foam: reusable Bubble Tea v2 components for sectui tools";
+  description = "foam: reusable Bubble Tea v2 components for foam tools";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 

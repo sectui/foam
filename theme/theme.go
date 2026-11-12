@@ -1,4 +1,4 @@
-// Package theme is the look shared by sectui tools. Apps embed Theme in their
+// Package theme is the look shared by foam tools. Apps embed Theme in their
 // config with `koanf:",squash"` and call Set once it is loaded.
 package theme
 

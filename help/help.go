@@ -7,10 +7,10 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/commands"
-	"github.com/sectui/foam/draw"
-	"github.com/sectui/foam/overlay"
-	"github.com/sectui/foam/theme"
+	"github.com/anotherhadi/foam/commands"
+	"github.com/anotherhadi/foam/draw"
+	"github.com/anotherhadi/foam/overlay"
+	"github.com/anotherhadi/foam/theme"
 )
 
 type Model struct {

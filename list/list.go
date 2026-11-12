@@ -5,8 +5,8 @@ package list
 import (
 	tea "charm.land/bubbletea/v2"
 
-	"github.com/sectui/foam/commands"
-	"github.com/sectui/foam/draw"
+	"github.com/anotherhadi/foam/commands"
+	"github.com/anotherhadi/foam/draw"
 )
 
 type Model struct {

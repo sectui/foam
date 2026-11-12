@@ -7,7 +7,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/vim"
+	"github.com/anotherhadi/foam/vim"
 )
 
 func TestWrapAndFollow(t *testing.T) {

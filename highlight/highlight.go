@@ -9,7 +9,7 @@ import (
 
 	"charm.land/lipgloss/v2"
 
-	"github.com/sectui/foam/theme"
+	"github.com/anotherhadi/foam/theme"
 )
 
 // Role is what a run of characters is, for its color.

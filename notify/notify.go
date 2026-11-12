@@ -10,8 +10,8 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/draw"
-	"github.com/sectui/foam/theme"
+	"github.com/anotherhadi/foam/draw"
+	"github.com/anotherhadi/foam/theme"
 )
 
 type Level int

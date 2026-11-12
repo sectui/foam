@@ -8,7 +8,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/commands"
+	"github.com/anotherhadi/foam/commands"
 )
 
 type box struct{}

@@ -1,4 +1,4 @@
-module github.com/sectui/foam
+module github.com/anotherhadi/foam
 
 go 1.26.7
 

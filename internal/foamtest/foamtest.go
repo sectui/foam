@@ -9,7 +9,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/commands"
+	"github.com/anotherhadi/foam/commands"
 )
 
 // Sizes are the boxes overlays are drawn in, tiny ones included.

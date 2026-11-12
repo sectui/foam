@@ -1,5 +1,5 @@
 # foam defaults: the look and the keys of foam's own components:
-# ~/.config/sectui/config.yaml.
+# ~/.config/foam/config.yaml.
 
 borderStyle: rounded # single | double | rounded | heavy
 nerdFonts: true

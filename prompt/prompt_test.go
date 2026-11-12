@@ -8,7 +8,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/sectui/foam/internal/foamtest"
+	"github.com/anotherhadi/foam/internal/foamtest"
 )
 
 type gotMsg string

@@ -3,18 +3,18 @@ package foam_test
 import (
 	"testing"
 
-	"github.com/sectui/foam"
-	"github.com/sectui/foam/commands"
-	"github.com/sectui/foam/config"
-	"github.com/sectui/foam/confirm"
-	"github.com/sectui/foam/form"
-	"github.com/sectui/foam/help"
-	"github.com/sectui/foam/list"
-	"github.com/sectui/foam/palette"
-	"github.com/sectui/foam/prompt"
-	"github.com/sectui/foam/theme"
-	"github.com/sectui/foam/tree"
-	"github.com/sectui/foam/viewer"
+	"github.com/anotherhadi/foam"
+	"github.com/anotherhadi/foam/commands"
+	"github.com/anotherhadi/foam/config"
+	"github.com/anotherhadi/foam/confirm"
+	"github.com/anotherhadi/foam/form"
+	"github.com/anotherhadi/foam/help"
+	"github.com/anotherhadi/foam/list"
+	"github.com/anotherhadi/foam/palette"
+	"github.com/anotherhadi/foam/prompt"
+	"github.com/anotherhadi/foam/theme"
+	"github.com/anotherhadi/foam/tree"
+	"github.com/anotherhadi/foam/viewer"
 )
 
 type cfg struct {
